@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/
+adventofcode-java-consoleapp.iml
 
 ### Eclipse ###
 .apt_generated

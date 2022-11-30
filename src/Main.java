@@ -1,5 +1,8 @@
+import controller.AOCDispatcher;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Testing Changes v2!");
+        AOCDispatcher aocDispatcher = new AOCDispatcher();
+        aocDispatcher.run();
     }
 }

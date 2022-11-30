@@ -1,0 +1,1 @@
+This console app requires at least Java 17 in order to work

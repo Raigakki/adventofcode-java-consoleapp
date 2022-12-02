@@ -1,9 +1,9 @@
 package repository;
 
-import model.AOCYearChallenge;
+import model.AOCChallenge;
 
 import java.util.List;
 
 public interface AOCRepository {
-    List<AOCYearChallenge> getAOCChallengeList();
+    List<AOCChallenge> getAOCChallengeList();
 }

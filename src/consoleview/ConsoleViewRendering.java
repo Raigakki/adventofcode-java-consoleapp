@@ -16,55 +16,57 @@ public class ConsoleViewRendering {
 
     public static void printWelcome() {
         String displayMessage =
+                String.format(
                 """
+                %s
                 #################################################################
                 ######    WELCOME TO ADVENT OF CODE CHALLENGE RESOLUTOR    ######
                 #################################################################
-                """;
+                %s
+                """,
+                ANSI_PURPLE,
+                ANSI_RESET);
         System.out.println(displayMessage);
     }
 
     public static void printAvailableYears(List<String> availableYearsList) {
-        String availableYearString = "";
+        StringBuilder availableYearString = new StringBuilder();
         for (String year : availableYearsList)
-            availableYearString += String.format("|| %s ||\n", year);
-        availableYearString = availableYearString.substring(0, availableYearString.length() - 1);
+            availableYearString.append(String.format("|| YEAR %s ||\n", year));
+        availableYearString = new StringBuilder(availableYearString.substring(0, availableYearString.length() - 1));
         String displayMessage = String.format(
                 """
                 Here are the available year of the AOC Challenge this app can solve:
                 
-                ##########
+                %s@@@@@@@@@@@@@@@
                 %s
-                ##########
+                @@@@@@@@@@@@@@@%s
                 
                 Please type the year you want the challenge to be solved:""",
-                availableYearString);
+                ANSI_CYAN,
+                availableYearString,
+                ANSI_RESET);
         System.out.println(displayMessage);
     }
 
     public static void printAvailableChallenges(List<String> availableChallengeList) {
-        String availableChallengesString = "";
-        String borderLine = "";
-        String innerLine = "";
+        StringBuilder availableChallengesString = new StringBuilder();
         for (String challenge : availableChallengeList)
-            availableChallengesString += String.format("%s - ", challenge);
-        availableChallengesString = availableChallengesString.substring(0, availableChallengesString.length() - 3);
-        innerLine = String.format("|| %s ||", availableChallengesString);
-        for (int i = 0; i < innerLine.length(); i++)
-            borderLine += "#";
+            availableChallengesString.append(String.format("|| CHALLENGE %s ||\n", challenge));
+        availableChallengesString = new StringBuilder(availableChallengesString.substring(0, availableChallengesString.length() - 1));
         String displayMessage = String.format(
                 """
                 Here are the available challenges of the selected year this app can solve:
                 
+                %s@@@@@@@@@@@@@@@@@@
                 %s
-                %s
-                %s
+                @@@@@@@@@@@@@@@@@@%s
                 
                 Please type the challenge you want to be solved:
                 """,
-                borderLine,
-                innerLine,
-                borderLine);
+                ANSI_YELLOW,
+                availableChallengesString,
+                ANSI_RESET);
         System.out.println(displayMessage);
     }
 
@@ -79,13 +81,31 @@ public class ConsoleViewRendering {
                 """
                 Here are the available parts of the selected challenge :
                 
-                ##############
+                %s@@@@@@@@@@@@@@
                 %s
-                ##############
+                @@@@@@@@@@@@@@%s
                              
                 Please insert whether you want to solve Part One (Type "1") or Part Two (Type "2").
                 """,
-                availableChallengesPartString);
+                ANSI_BLUE,
+                availableChallengesPartString,
+                ANSI_RESET);
         System.out.println(displayMessage);
     }
+
+    public static void printResponse(String response) {
+        String displayMessage = String.format(
+                """
+                %s
+                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                %s
+                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                %s
+                """,
+                ANSI_GREEN,
+                response,
+                ANSI_RESET);
+        System.out.println(displayMessage);
+    }
+
 }

@@ -1,5 +1,3 @@
-package controller;
-
 import consoleview.ConsoleViewRendering;
 import exception.AOCException;
 import model.AOCChallenge;
@@ -14,9 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AOCDispatcher {
-
-    // TODO REFACTOR GENERALE DELLE VIEW
+public class AOCRunner implements Runnable {
 
     private static final String EMAIL_ADDRESS = "maltagliatiandrea@gmail.com";
     private static final String SERVICE_PATH_PATTERN = "service.AOC%s.AOC%sChallenge%sService";
@@ -24,8 +20,6 @@ public class AOCDispatcher {
 
     private final Scanner keyboardScanner = new Scanner(System.in);
     private final AOCRepository aocRepository = new AOCFileRepository();
-
-    private AOCService aocService;
 
     private String yearInput = "";
     private String challengeInput = "";
@@ -38,8 +32,6 @@ public class AOCDispatcher {
         ConsoleViewRendering.printWelcome();
         while (continueFlg) {
             this.selectChallenge();
-            if (continueFlg)
-                this.getAOCService(yearInput, challengeInput);
             if (continueFlg)
                 this.solveInputChallenge(challengePartInput);
             this.askForAnotherSolution();
@@ -104,22 +96,14 @@ public class AOCDispatcher {
         }
     }
 
-    private void getAOCService(String yearInput, String challengeInput) {
+    private void solveInputChallenge(String challengePartInput) {
+        // TODO REFACTOR SPOSTANDO A UNA CLASSE/METODO LA LETTURA FILE (CON THROW DI 1 ECC)
+        String response = "";
         try {
             Class<?> serviceClass = Class.forName(String.format(SERVICE_PATH_PATTERN,
-                            yearInput, yearInput, challengeInput));
-            aocService = (AOCService) serviceClass.getDeclaredConstructor().newInstance();
-            continueFlg = true;
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-            | InvocationTargetException | NoSuchMethodException e) {
-            System.out.println(e.getMessage());
-            continueFlg = false;
-        }
-    }
-
-    private void solveInputChallenge(String challengePartInput) {
-        StringBuilder challengeInstructions = new StringBuilder();
-        try {
+                    yearInput, yearInput, challengeInput));
+            AOCService aocService = (AOCService) serviceClass.getDeclaredConstructor().newInstance();
+            StringBuilder challengeInstructions = new StringBuilder();
             File inputFile = new File(String.format(RESOURCES_PATH_PATTERN, yearInput, challengeInput));
             Scanner fileScanner = new Scanner(inputFile);
             while (fileScanner.hasNextLine()) {
@@ -127,17 +111,21 @@ public class AOCDispatcher {
                 if (fileScanner.hasNextLine())
                     challengeInstructions.append("\n");
             }
+            if (challengePartInput.equals("1") || challengePartInput.equals("01"))
+                response = aocService.solvePartOne(challengeInstructions.toString());
+            else if (challengePartInput.equals("2") || challengePartInput.equals("02"))
+                response = aocService.solvePartTwo(challengeInstructions.toString());
+            ConsoleViewRendering.printResponse(response);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                 | InvocationTargetException | NoSuchMethodException e) {
+            System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println("Error in reading file. Please check input file.");
         }
-
-        if (challengePartInput.equals("1") || challengePartInput.equals("01"))
-            aocService.solvePartOne(challengeInstructions.toString());
-        else if (challengePartInput.equals("2") || challengePartInput.equals("02"))
-            aocService.solvePartTwo(challengeInstructions.toString());
     }
 
     private void askForAnotherSolution() {
+        // TODO REFACTOR CONDIZIONI USCITA + VIEW
         System.out.println("Do you want to solve another Challenge?");
         String inputContinue = keyboardScanner.nextLine();
         if (inputContinue.equalsIgnoreCase("yes") ||
@@ -146,8 +134,8 @@ public class AOCDispatcher {
             inputContinue.equalsIgnoreCase("another")) {
             continueFlg = true;
         } else {
-            System.out.println("Thank you for trying this simple Java console app!\n" +
-                    "If you have any kind of advice please write me at " + this.EMAIL_ADDRESS);
+            System.out.println("THANKS FOR TRYING THIS SIMPLE JAVA CONSOLE APP!\n" +
+                    "IF YOU HAVE ANY KIND OF ADVICE PLEASE WRITE ME AT " + EMAIL_ADDRESS);
             continueFlg = false;
         }
     }

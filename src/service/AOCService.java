@@ -1,6 +1,6 @@
 package service;
 
 public interface AOCService {
-    void solvePartOne(String input);
-    void solvePartTwo(String input);
+    String solvePartOne(String input);
+    String solvePartTwo(String input);
 }

@@ -7,22 +7,22 @@ import java.util.regex.Pattern;
 
 public class AOC2015Challenge06Service implements AOCService {
 
-    // TODO
-
     @Override
-    public void solvePartOne(String input) {
-        {
-            // A 1000X1000 MATRIX IS AN ARRAY[1000] OF ARRAY[1000]
-            int[][] lightGrid = new int[1000][];
-            for (int i = 0; i < 1000; i++) {
-                lightGrid[i] = new int[1000];
-            }
+    public String solvePartOne(String input) {
+        String[] instructionList = input.split("\n");
 
-            String[] instructionList = ((String)input).split("\n");
+        // WE CAN SEE THE GRID OF 1000X1000 LIGHT AS A MATRIX
+        // A 1000X1000 MATRIX IS AN ARRAY[1000] OF ARRAY[1000]
+        // WHERE VALUE = 1 MEANS "ON", AND VALUE = 0 MEANS "OFF"
+        int[][] lightGrid = new int[1000][];
+        for (int i = 0; i < 1000; i++) {
+            lightGrid[i] = new int[1000];
+        }
 
-            // CREO UN PATTERN IN MODO DA ESTRAPOLARMI COMODAMENTE I DATI CHE MI SERVONO CON I GRUPPI DEL MATCHER
-            Pattern pattern = Pattern.compile("(turn off|turn on|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
+        // I CREATE A PATTERN IN ORDER TO EASILY EXTRACT DATA I NEED, USING GROUPS MATCHER
+        Pattern pattern = Pattern.compile("(turn off|turn on|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
 
+        try {
             for (String instruction : instructionList) {
                 Matcher matcher = pattern.matcher(instruction);
                 if (matcher.matches()) {
@@ -34,51 +34,44 @@ public class AOC2015Challenge06Service implements AOCService {
                     for (int i = x; i <= x2; i++) {
                         for (int j = y; j <= y2; j++) {
                             switch (matcher.group(1)) {
-                                case "turn on":
-                                    lightGrid[i][j] = 1;
-                                    break;
-                                case "turn off":
-                                    lightGrid[i][j] = 0;
-                                    break;
-                                case "toggle":
-                                    lightGrid[i][j] = lightGrid[i][j] == 1 ? 0 : 1;
-                                    break;
-                                default:
-                                    throw new RuntimeException("Errore nell'interpretazione delle istruzioni");
+                                case "turn on" -> lightGrid[i][j] = 1;
+                                case "turn off" -> lightGrid[i][j] = 0;
+                                case "toggle" -> lightGrid[i][j] = lightGrid[i][j] == 1 ? 0 : 1;
+                                default -> throw new Exception("Error in interpreting instructions.");
                             }
                         }
                     }
                 }
             }
 
+            // CALCULATING TOTAL NUMBERS OF LIGHTS ON
             int lightsOnSum = 0;
-            // CALCOLO L'INTENSITA' TOTALE
             for (int i = 0; i < 1000; i++) {
                 for (int j = 0; j < 1000; j++) {
                     lightsOnSum += lightGrid[i][j];
                 }
             }
 
-            //return lightsOnSum;
+            return String.format("The total number of lights turned ON is %d.", lightsOnSum);
 
+        } catch (Exception e) {
+            return e.getMessage();
         }
 
     }
 
     @Override
-    public void solvePartTwo(String input) {
-        {
-            // CREO LA MATRICE 1000X1000
-            int[][] grid = new int[1000][];
-            for (int i = 0; i < 1000; i++) {
-                grid[i] = new int[1000];
-            }
+    public String solvePartTwo(String input) {
+        String[] instructionList = input.split("\n");
 
-            String[] instructionList = ((String)input).split("\n");
+        int[][] lightGrid = new int[1000][];
+        for (int i = 0; i < 1000; i++) {
+            lightGrid[i] = new int[1000];
+        }
 
-            // CREO UN PATTERN IN MODO DA ESTRAPOLARMI COMODAMENTE I DATI CHE MI SERVONO CON I GRUPPI DEL MATCHER
-            Pattern pattern = Pattern.compile("(turn off|turn on|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
+        Pattern pattern = Pattern.compile("(turn off|turn on|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
 
+        try {
             for (String instruction : instructionList) {
                 Matcher matcher = pattern.matcher(instruction);
                 if (matcher.matches()) {
@@ -90,33 +83,29 @@ public class AOC2015Challenge06Service implements AOCService {
                     for (int i = x; i <= x2; i++) {
                         for (int j = y; j <= y2; j++) {
                             switch (matcher.group(1)) {
-                                case "turn on":
-                                    grid[i][j] += 1;
-                                    break;
-                                case "turn off":
-                                    grid[i][j] += grid[i][j] > 0 ? -1 : 0;
-                                    break;
-                                case "toggle":
-                                    grid[i][j] += 2;
-                                    break;
-                                default:
-                                    throw new RuntimeException("Errore nell'interpretazione delle istruzioni");
+                                case "turn on" -> lightGrid[i][j] += 1;
+                                case "turn off" -> lightGrid[i][j] += lightGrid[i][j] > 0 ? -1 : 0;
+                                case "toggle" -> lightGrid[i][j] += 2;
+                                default -> throw new RuntimeException("Error in interpreting instructions.");
                             }
                         }
                     }
                 }
             }
 
+            // CALCULATING TOTAL BRIGHTNESS
             int brightnessSum = 0;
-            // CALCOLO L'INTENSITA' TOTALE
             for (int i = 0; i < 1000; i++) {
                 for (int j = 0; j < 1000; j++) {
-                    brightnessSum += grid[i][j];
+                    brightnessSum += lightGrid[i][j];
                 }
             }
 
-            //return brightnessSum;
+            return String.format("The total brightness of the lights is %d.", brightnessSum);
 
+        } catch (Exception e) {
+            return e.getMessage();
         }
+
     }
 }

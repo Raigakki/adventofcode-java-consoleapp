@@ -1,11 +1,12 @@
 package service.AOC2022;
 
+import exception.AOCException;
 import service.AOCService;
 
 public class AOC2022Challenge02Service implements AOCService {
 
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne(String input) throws AOCException {
         String[] matches = input.split("\n");
         int score = 0;
         for (String match : matches) {
@@ -15,7 +16,7 @@ public class AOC2022Challenge02Service implements AOCService {
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo(String input) throws AOCException {
         String[] matches = input.split("\n");
         int score = 0;
         for (String match : matches) {
@@ -24,7 +25,7 @@ public class AOC2022Challenge02Service implements AOCService {
         return String.format("Your total score is: %d", score);
     }
 
-    private int duelv1(char player1move, char player2move) {
+    private int duelv1(char player1move, char player2move) throws AOCException {
         int score = 0;
         switch (player2move) {
             case 'Y' -> {
@@ -42,11 +43,12 @@ public class AOC2022Challenge02Service implements AOCService {
                 if (player1move == 'B') score = score + 6;
                 if (player1move == 'C') score = score + 3;
             }
+            default -> throw new AOCException("ERROR IN PARSING ELF MOVES");
         }
         return score;
     }
 
-    private int duelv2(char player1move, char player2move) {
+    private int duelv2(char player1move, char player2move) throws AOCException {
         int score = 0;
         switch (player2move) {
             case 'Y' -> { // DRAW
@@ -66,6 +68,7 @@ public class AOC2022Challenge02Service implements AOCService {
                 if (player1move == 'B') score = score + 3;
                 if (player1move == 'C') score = score + 1;
             }
+            default -> throw new AOCException("ERROR IN PARSING ELF MOVES");
         }
         return score;
     }

@@ -21,7 +21,7 @@ public class AOC2022Challenge01Service implements AOCService {
                 maxCalories = currentIterationCalories;
             currentIterationCalories = 0;
         }
-        return String.format("The maximum calories an elf is carrying is %d", maxCalories);
+        return String.format("THE MAXIMUM CALORIES AN ELF IS CARRYING IS %d.", maxCalories);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class AOC2022Challenge01Service implements AOCService {
 
         for (int i = 0; i < 3; i++)
             top3ElfCalories += totalCaloriesPerElfList.get(i);
-        return String.format("The top three elf calories-carrying elves are carrying a total of " +
-                "%d calories.", top3ElfCalories);
+        return String.format("THE TOP THREE ELF CALORIES-CARRYING ELVES ARE CARRYING A TOTAL OF " +
+                "%d CALORIES.", top3ElfCalories);
     }
 
 }

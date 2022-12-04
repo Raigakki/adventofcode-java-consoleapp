@@ -14,7 +14,7 @@ public class AOC2015Challenge01Service implements AOCService {
             else if (character == ')')
                 floor = floor - 1;
         }
-        return String.format("The floor where Santa has to go is floor %d!", floor);
+        return String.format("THE FLOOR WHERE SANTA HAS TO GO IS FLOOR %d.", floor);
     }
 
     @Override
@@ -30,10 +30,10 @@ public class AOC2015Challenge01Service implements AOCService {
             instructionCharacterPosition++;
             if (floor < 0) {
                 return String.format(
-                        "The first character position when Santa goes below floor zero is %d!\n",
+                        "THE FIRST CHARACTER POSITION WHEN SANTA GOES BELOW FLOOR ZERO IS %d.\n",
                         instructionCharacterPosition);
             }
         }
-        return ("Santa never goes below floor zero!");
+        return ("SANTA NEVER GOES BELOW FLOOR ZERO!");
     }
 }

@@ -28,7 +28,7 @@ public class AOC2022Challenge03Service implements AOCService {
             }
             sharedItemsPrioritySum += ITEM_LIST.indexOf(sharedItem) + 1;
         }
-        return String.format("The sum of the priorities of shared items is: %d.", sharedItemsPrioritySum);
+        return String.format("THE SUM OF THE PRIORITIES OF SHARED ITEMS IS: %d.", sharedItemsPrioritySum);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class AOC2022Challenge03Service implements AOCService {
             }
             badgesPrioritySum += ITEM_LIST.indexOf(badge) + 1;
         }
-        return String.format("The sum of the priorities of badges is: %d.", badgesPrioritySum);
+        return String.format("THE SUM OF THE PRIORITIES OF BADGES IS: %d.", badgesPrioritySum);
     }
 
 }

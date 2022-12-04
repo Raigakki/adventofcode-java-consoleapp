@@ -52,7 +52,7 @@ public class AOC2015Challenge06Service implements AOCService {
                 }
             }
 
-            return String.format("The total number of lights turned ON is %d.", lightsOnSum);
+            return String.format("THE TOTAL NUMBER OF LIGHTS TURNED ON IS %d.", lightsOnSum);
 
         } catch (Exception e) {
             return e.getMessage();
@@ -86,7 +86,7 @@ public class AOC2015Challenge06Service implements AOCService {
                                 case "turn on" -> lightGrid[i][j] += 1;
                                 case "turn off" -> lightGrid[i][j] += lightGrid[i][j] > 0 ? -1 : 0;
                                 case "toggle" -> lightGrid[i][j] += 2;
-                                default -> throw new RuntimeException("Error in interpreting instructions.");
+                                default -> throw new RuntimeException("ERROR IN INTERPRETING LIGHTS INSTRUCTIONS.");
                             }
                         }
                     }
@@ -101,7 +101,7 @@ public class AOC2015Challenge06Service implements AOCService {
                 }
             }
 
-            return String.format("The total brightness of the lights is %d.", brightnessSum);
+            return String.format("THE TOTAL BRIGHTNESS OF THE LIGHTS IS %d.", brightnessSum);
 
         } catch (Exception e) {
             return e.getMessage();

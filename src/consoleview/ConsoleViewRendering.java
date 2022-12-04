@@ -4,15 +4,13 @@ import java.util.List;
 
 public class ConsoleViewRendering {
 
+    private static final String EMAIL_ADDRESS = "maltagliatiandrea@gmail.com";
+
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static void printWelcome() {
         String displayMessage =
@@ -21,8 +19,7 @@ public class ConsoleViewRendering {
                 %s
                 #################################################################
                 ######    WELCOME TO ADVENT OF CODE CHALLENGE RESOLUTOR    ######
-                #################################################################
-                %s
+                #################################################################%s
                 """,
                 ANSI_PURPLE,
                 ANSI_RESET);
@@ -36,14 +33,13 @@ public class ConsoleViewRendering {
         availableYearString = new StringBuilder(availableYearString.substring(0, availableYearString.length() - 1));
         String displayMessage = String.format(
                 """
-                Here are the available year of the AOC Challenge this app can solve:
-                
-                %s@@@@@@@@@@@@@@@
+                %s###############
                 %s
-                @@@@@@@@@@@@@@@%s
+                ###############%s
                 
-                Please type the year you want the challenge to be solved:""",
-                ANSI_CYAN,
+                Please choose the year you want the challenge to be solved:
+                """,
+                ANSI_BLUE,
                 availableYearString,
                 ANSI_RESET);
         System.out.println(displayMessage);
@@ -56,15 +52,14 @@ public class ConsoleViewRendering {
         availableChallengesString = new StringBuilder(availableChallengesString.substring(0, availableChallengesString.length() - 1));
         String displayMessage = String.format(
                 """
-                Here are the available challenges of the selected year this app can solve:
                 
-                %s@@@@@@@@@@@@@@@@@@
+                %s##################
                 %s
-                @@@@@@@@@@@@@@@@@@%s
+                ##################%s
                 
-                Please type the challenge you want to be solved:
+                Please choose the challenge you want to be solved:
                 """,
-                ANSI_YELLOW,
+                ANSI_BLUE,
                 availableChallengesString,
                 ANSI_RESET);
         System.out.println(displayMessage);
@@ -79,13 +74,12 @@ public class ConsoleViewRendering {
         availableChallengesPartString = availableChallengesPartString.substring(0, availableChallengesPartString.length() - 1);
         String displayMessage = String.format(
                 """
-                Here are the available parts of the selected challenge :
                 
-                %s@@@@@@@@@@@@@@
+                %s##############
                 %s
-                @@@@@@@@@@@@@@%s
+                ##############%s
                              
-                Please insert whether you want to solve Part One (Type "1") or Part Two (Type "2").
+                Please choose whether you want to solve Part One or Part Two.
                 """,
                 ANSI_BLUE,
                 availableChallengesPartString,
@@ -96,16 +90,46 @@ public class ConsoleViewRendering {
     public static void printResponse(String response) {
         String displayMessage = String.format(
                 """
+                %s###############################################################################
                 %s
-                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                %s
-                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                %s
+                ###############################################################################%s
                 """,
                 ANSI_GREEN,
                 response,
                 ANSI_RESET);
         System.out.println(displayMessage);
     }
+
+    public static void printError(String error) {
+        String displayMessage = String.format(
+                """
+                %s
+                ###############################################################################
+                %s
+                ###############################################################################
+                %s
+                """,
+                ANSI_RED,
+                error,
+                ANSI_RESET);
+        System.out.println(displayMessage);
+    }
+
+    public static void printBye() {
+        String displayMessage = String.format(
+                """
+                %s
+                &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                THANKS FOR TRYING THIS SIMPLE JAVA CONSOLE APP!
+                IF YOU HAVE ANY KIND OF ADVICE PLEASE WRITE ME AT %s
+                &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                %s
+                """,
+                ANSI_RED,
+                EMAIL_ADDRESS,
+                ANSI_RESET);
+        System.out.println(displayMessage);
+    }
+
 
 }

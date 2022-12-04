@@ -14,7 +14,6 @@ import java.util.Scanner;
 
 public class AOCRunner implements Runnable {
 
-    private static final String EMAIL_ADDRESS = "maltagliatiandrea@gmail.com";
     private static final String SERVICE_PATH_PATTERN = "service.AOC%s.AOC%sChallenge%sService";
     private static final String RESOURCES_PATH_PATTERN = "./resources/AOC%s/E%s.txt";
 
@@ -31,14 +30,14 @@ public class AOCRunner implements Runnable {
     public void run() {
         ConsoleViewRendering.printWelcome();
         while (continueFlg) {
-            this.selectChallenge();
+            this.showAndSelectAvailableChallenges();
             if (continueFlg)
                 this.solveInputChallenge(challengePartInput);
             this.askForAnotherSolution();
         }
     }
 
-    private void selectChallenge() {
+    private void showAndSelectAvailableChallenges() {
         List<AOCChallenge> aocChallengeList = aocRepository.getAOCChallengeList();
         try {
             // AVAILABLE YEARS
@@ -89,16 +88,14 @@ public class AOCRunner implements Runnable {
                 throw new AOCException(errMsg);
             }
             continueFlg = true;
-
         } catch (AOCException e) {
-            System.out.println(e.getMessage());
+            ConsoleViewRendering.printError(e.getMessage());
             continueFlg = false;
         }
     }
 
     private void solveInputChallenge(String challengePartInput) {
-        // TODO REFACTOR SPOSTANDO A UNA CLASSE/METODO LA LETTURA FILE (CON THROW DI 1 ECC)
-        String response = "";
+        String response;
         try {
             Class<?> serviceClass = Class.forName(String.format(SERVICE_PATH_PATTERN,
                     yearInput, yearInput, challengeInput));
@@ -111,31 +108,31 @@ public class AOCRunner implements Runnable {
                 if (fileScanner.hasNextLine())
                     challengeInstructions.append("\n");
             }
-            if (challengePartInput.equals("1") || challengePartInput.equals("01"))
+            if (challengePartInput.equals("01"))
                 response = aocService.solvePartOne(challengeInstructions.toString());
-            else if (challengePartInput.equals("2") || challengePartInput.equals("02"))
+            else
                 response = aocService.solvePartTwo(challengeInstructions.toString());
             ConsoleViewRendering.printResponse(response);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                  | InvocationTargetException | NoSuchMethodException e) {
-            System.out.println(e.getMessage());
+            errMsg = "ERROR IN INSTANTIATING CLASS OF THE SOLUTION. PLEASE CHECK IF THE SERVICE CLASS IS MISSING.";
+            ConsoleViewRendering.printError(errMsg);
         } catch (IOException e) {
-            System.out.println("Error in reading file. Please check input file.");
+            errMsg = "ERROR IN READING INPUT FILE. PLEASE CHECK INPUT FILE @ ./resources/AOCYYYY.txt.";
+            ConsoleViewRendering.printError(errMsg);
+        } catch (AOCException e) {
+            errMsg = e.getMessage();
+            ConsoleViewRendering.printError(errMsg);
         }
     }
 
     private void askForAnotherSolution() {
-        // TODO REFACTOR CONDIZIONI USCITA + VIEW
-        System.out.println("Do you want to solve another Challenge?");
+        System.out.println("Do you want to solve another Challenge?\n");
         String inputContinue = keyboardScanner.nextLine();
-        if (inputContinue.equalsIgnoreCase("yes") ||
-            inputContinue.equalsIgnoreCase("y") ||
-            inputContinue.equalsIgnoreCase("continue") ||
-            inputContinue.equalsIgnoreCase("another")) {
+        if (inputContinue.equalsIgnoreCase("y")) {
             continueFlg = true;
         } else {
-            System.out.println("THANKS FOR TRYING THIS SIMPLE JAVA CONSOLE APP!\n" +
-                    "IF YOU HAVE ANY KIND OF ADVICE PLEASE WRITE ME AT " + EMAIL_ADDRESS);
+            ConsoleViewRendering.printBye();
             continueFlg = false;
         }
     }

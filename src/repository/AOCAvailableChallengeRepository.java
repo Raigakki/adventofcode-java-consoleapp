@@ -4,6 +4,6 @@ import model.AOCChallenge;
 
 import java.util.List;
 
-public interface AOCRepository {
+public interface AOCAvailableChallengeRepository {
     List<AOCChallenge> getAOCChallengeList();
 }

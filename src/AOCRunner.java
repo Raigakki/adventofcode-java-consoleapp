@@ -1,8 +1,8 @@
 import consoleview.ConsoleViewRendering;
 import exception.AOCException;
 import model.AOCChallenge;
-import repository.AOCFileRepository;
-import repository.AOCRepository;
+import repository.AOCAvailableChallengeFileRepository;
+import repository.AOCAvailableChallengeRepository;
 import service.AOCService;
 
 import java.io.File;
@@ -18,11 +18,11 @@ public class AOCRunner implements Runnable {
     private static final String RESOURCES_PATH_PATTERN = "./resources/AOC%s/E%s.txt";
 
     private final Scanner keyboardScanner = new Scanner(System.in);
-    private final AOCRepository aocRepository = new AOCFileRepository();
+    private final AOCAvailableChallengeRepository aocAvailableChallengeFileRepository =
+            new AOCAvailableChallengeFileRepository();
 
     private String yearInput = "";
     private String challengeInput = "";
-    private String challengePartInput = "";
 
     boolean continueFlg = true;
     String errMsg = "";
@@ -32,15 +32,15 @@ public class AOCRunner implements Runnable {
         while (continueFlg) {
             this.showAndSelectAvailableChallenges();
             if (continueFlg)
-                this.solveInputChallenge(challengePartInput);
+                this.solveInputChallenge();
             this.askForAnotherSolution();
         }
     }
 
     private void showAndSelectAvailableChallenges() {
-        List<AOCChallenge> aocChallengeList = aocRepository.getAOCChallengeList();
+        List<AOCChallenge> aocChallengeList = aocAvailableChallengeFileRepository.getAOCChallengeList();
         try {
-            // AVAILABLE YEARS
+            // SELECT YEAR
             List<String> availableYearsList = new ArrayList<>();
             aocChallengeList
                     .forEach(aocChallenge -> {
@@ -54,7 +54,7 @@ public class AOCRunner implements Runnable {
                 throw new AOCException(errMsg);
             }
 
-            // AVAILABLE CHALLENGES
+            // SELECT CHALLENGE
             List<String> availableSelectedYearChallengeList = new ArrayList<>();
             aocChallengeList
                     .stream()
@@ -71,22 +71,6 @@ public class AOCRunner implements Runnable {
                 errMsg = "Inserted an illegal challenge number. Please check you input, it must be an available challenge.";
                 throw new AOCException(errMsg);
             }
-
-            // AVAILABLE PARTS
-            List<String> availableSelectedChallengePartList = new ArrayList<>();
-            aocChallengeList
-                    .stream()
-                    .filter(aocChallenge -> aocChallenge.year().equals(yearInput))
-                    .filter(aocChallenge -> aocChallenge.challengeNumber().equals(challengeInput))
-                    .forEach(aocChallenge -> availableSelectedChallengePartList.add(aocChallenge.challengePart()));
-            ConsoleViewRendering.printAvailableParts(availableSelectedChallengePartList);
-            challengePartInput = keyboardScanner.nextLine();
-            if (challengePartInput.length() == 1)
-                challengePartInput = "0" + challengePartInput;
-            if (!availableSelectedChallengePartList.contains(challengePartInput)) {
-                errMsg = "Inserted an illegal challenge part. Please check you input, it must be an available part.";
-                throw new AOCException(errMsg);
-            }
             continueFlg = true;
         } catch (AOCException e) {
             ConsoleViewRendering.printError(e.getMessage());
@@ -94,8 +78,9 @@ public class AOCRunner implements Runnable {
         }
     }
 
-    private void solveInputChallenge(String challengePartInput) {
-        String response;
+    private void solveInputChallenge() {
+        String responsePartOne;
+        String responsePartTwo;
         try {
             Class<?> serviceClass = Class.forName(String.format(SERVICE_PATH_PATTERN,
                     yearInput, yearInput, challengeInput));
@@ -108,11 +93,9 @@ public class AOCRunner implements Runnable {
                 if (fileScanner.hasNextLine())
                     challengeInstructions.append("\n");
             }
-            if (challengePartInput.equals("01"))
-                response = aocService.solvePartOne(challengeInstructions.toString());
-            else
-                response = aocService.solvePartTwo(challengeInstructions.toString());
-            ConsoleViewRendering.printResponse(response);
+            responsePartOne = aocService.solvePartOne(challengeInstructions.toString());
+            responsePartTwo = aocService.solvePartTwo(challengeInstructions.toString());
+            ConsoleViewRendering.printResponse(responsePartOne, responsePartTwo);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                  | InvocationTargetException | NoSuchMethodException e) {
             errMsg = "ERROR IN INSTANTIATING CLASS OF THE SOLUTION. PLEASE CHECK IF THE SERVICE CLASS IS MISSING.";

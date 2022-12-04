@@ -65,37 +65,17 @@ public class ConsoleViewRendering {
         System.out.println(displayMessage);
     }
 
-    public static void printAvailableParts(List<String> availableChallengePartList) {
-        String availableChallengesPartString = "";
-        if (availableChallengePartList.contains("01"))
-            availableChallengesPartString += "|| PART ONE ||\n";
-        if (availableChallengePartList.contains("02"))
-            availableChallengesPartString += "|| PART TWO ||\n";
-        availableChallengesPartString = availableChallengesPartString.substring(0, availableChallengesPartString.length() - 1);
+    public static void printResponse(String responsePartOne, String responsePartTwo) {
         String displayMessage = String.format(
                 """
-                
-                %s##############
+                %s#########################################################################################
                 %s
-                ##############%s
-                             
-                Please choose whether you want to solve Part One or Part Two.
-                """,
-                ANSI_BLUE,
-                availableChallengesPartString,
-                ANSI_RESET);
-        System.out.println(displayMessage);
-    }
-
-    public static void printResponse(String response) {
-        String displayMessage = String.format(
-                """
-                %s###############################################################################
                 %s
-                ###############################################################################%s
+                #########################################################################################%s
                 """,
                 ANSI_GREEN,
-                response,
+                responsePartOne,
+                responsePartTwo,
                 ANSI_RESET);
         System.out.println(displayMessage);
     }
@@ -103,11 +83,9 @@ public class ConsoleViewRendering {
     public static void printError(String error) {
         String displayMessage = String.format(
                 """
+                %s#########################################################################################
                 %s
-                ###############################################################################
-                %s
-                ###############################################################################
-                %s
+                #########################################################################################%s
                 """,
                 ANSI_RED,
                 error,
@@ -119,10 +97,10 @@ public class ConsoleViewRendering {
         String displayMessage = String.format(
                 """
                 %s
-                &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                ###############################################################################
                 THANKS FOR TRYING THIS SIMPLE JAVA CONSOLE APP!
-                IF YOU HAVE ANY KIND OF ADVICE PLEASE WRITE ME AT %s
-                &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+                IF YOU HAVE ANY KIND OF ADVICE PLEASE WRITE ME AT %s!
+                ###############################################################################
                 %s
                 """,
                 ANSI_RED,

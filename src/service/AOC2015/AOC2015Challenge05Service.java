@@ -8,12 +8,18 @@ import java.util.Set;
 
 public class AOC2015Challenge05Service implements AOCService {
 
+    private final String inputString;
+
     private static final Set<Character> VOWELS_LOWERCASE = Set.of('a','e','i','o','u');
     private static final Set<String> BLACKLISTED_STRINGS = Set.of("ab", "cd", "pq", "xy");
 
+    public AOC2015Challenge05Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
-        List<String> inputList = StaticUtils.fromInputToStringList(input);
+    public String solvePartOne() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         long niceStringCount = inputList.stream()
                 .filter(this::vowelsCheck)
                 .filter(this::twiceInARowCheck)
@@ -23,8 +29,8 @@ public class AOC2015Challenge05Service implements AOCService {
     }
 
     @Override
-    public String solvePartTwo(String input) {
-        List<String> inputList = StaticUtils.fromInputToStringList(input);
+    public String solvePartTwo() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         long niceStringCount = inputList.stream()
                 .filter(this::doublePairNotOverlappingCheck)
                 .filter(this::letterRepeatsWithCharInBetweenCheck)

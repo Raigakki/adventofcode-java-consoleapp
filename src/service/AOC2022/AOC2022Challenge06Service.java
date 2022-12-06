@@ -7,11 +7,17 @@ import java.util.Set;
 
 public class AOC2022Challenge06Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2022Challenge06Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne() {
         String marker = "";
-        for (int i = 0; i < input.length() - 4; i++) {
-            String preMarker = input.substring(i, i+4);
+        for (int i = 0; i < inputString.length() - 4; i++) {
+            String preMarker = inputString.substring(i, i+4);
             Set<Character> characterSet = new HashSet<>();
             for (char c : preMarker.toCharArray()) {
                 characterSet.add(c);
@@ -26,10 +32,10 @@ public class AOC2022Challenge06Service implements AOCService {
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo() {
         String marker = "";
-        for (int i = 0; i < input.length() - 14; i++) {
-            String preMarker = input.substring(i, i+14);
+        for (int i = 0; i < inputString.length() - 14; i++) {
+            String preMarker = inputString.substring(i, i+14);
             Set<Character> characterSet = new HashSet<>();
             for (char c : preMarker.toCharArray()) {
                 characterSet.add(c);

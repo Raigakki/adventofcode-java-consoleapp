@@ -1,6 +1,7 @@
 package service.AOC2022;
 
 import service.AOCService;
+import utils.StaticUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,11 +10,18 @@ import java.util.stream.Collectors;
 
 public class AOC2022Challenge01Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2022Challenge01Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n\n");
         int maxCalories = Integer.MIN_VALUE;
         int currentIterationCalories = 0;
-        for (String totalCalories : input.split("\n\n")) {
+        for (String totalCalories : inputList) {
             for (String caloriesPerElf : totalCalories.split("\n")) {
                 currentIterationCalories += Integer.parseInt(caloriesPerElf);
             }
@@ -21,15 +29,16 @@ public class AOC2022Challenge01Service implements AOCService {
                 maxCalories = currentIterationCalories;
             currentIterationCalories = 0;
         }
-        return String.format("THE MAXIMUM CALORIES AN ELF IS CARRYING IS %d.", maxCalories);
+        return String.valueOf(maxCalories);
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n\n");
         int top3ElfCalories = 0;
         List<Integer> totalCaloriesPerElfList = new ArrayList<>();
         int currentIterationCalories = 0;
-        for (String totalCalories : input.split("\n\n")) {
+        for (String totalCalories : inputList) {
             for (String caloriesPerElf : totalCalories.split("\n")) {
                 currentIterationCalories += Integer.parseInt(caloriesPerElf);
             }
@@ -42,8 +51,7 @@ public class AOC2022Challenge01Service implements AOCService {
 
         for (int i = 0; i < 3; i++)
             top3ElfCalories += totalCaloriesPerElfList.get(i);
-        return String.format("THE TOP THREE ELF CALORIES-CARRYING ELVES ARE CARRYING A TOTAL OF " +
-                "%d CALORIES.", top3ElfCalories);
+        return String.valueOf(top3ElfCalories);
     }
 
 }

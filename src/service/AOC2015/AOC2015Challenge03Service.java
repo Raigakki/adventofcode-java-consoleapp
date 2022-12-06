@@ -7,13 +7,19 @@ import java.util.Set;
 
 public class AOC2015Challenge03Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2015Challenge03Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne() {
         int x = 0;
         int y = 0;
         Set<String> passedByCoordinates = new HashSet<>();
         passedByCoordinates.add("" + x + "," + y);
-        for (char movement : input.toCharArray()) {
+        for (char movement : inputString.toCharArray()) {
             switch (movement) {
                 case '^' -> y++;
                 case 'v' -> y--;
@@ -22,11 +28,11 @@ public class AOC2015Challenge03Service implements AOCService {
             }
             passedByCoordinates.add("" + x + "," + y);
         }
-        return passedByCoordinates.size() + "";
+        return String.valueOf(passedByCoordinates.size());
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo() {
         int xSanta = 0;
         int ySanta = 0;
         int xRoboSanta = 0;
@@ -34,7 +40,7 @@ public class AOC2015Challenge03Service implements AOCService {
         int turn = 1;
         Set<String> passedByCoordinates = new HashSet<>();
         passedByCoordinates.add("" + xSanta + "," + ySanta);
-        for (char movement : input.toCharArray()) {
+        for (char movement : inputString.toCharArray()) {
             if (turn == 1) {
                 switch (movement) {
                     case '^' -> ySanta++;
@@ -55,6 +61,6 @@ public class AOC2015Challenge03Service implements AOCService {
             }
             turn = turn * -1;
         }
-        return passedByCoordinates.size() + "";
+        return String.valueOf(passedByCoordinates.size());
     }
 }

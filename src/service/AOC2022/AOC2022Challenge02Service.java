@@ -2,27 +2,36 @@ package service.AOC2022;
 
 import exception.AOCException;
 import service.AOCService;
+import utils.StaticUtils;
+
+import java.util.List;
 
 public class AOC2022Challenge02Service implements AOCService {
 
-    @Override
-    public String solvePartOne(String input) throws AOCException {
-        String[] matches = input.split("\n");
-        int score = 0;
-        for (String match : matches) {
-            score += this.duelv1(match.charAt(0), match.charAt(2));
-        }
-        return String.format("Your total score is: %d", score);
+    private final String inputString;
+
+    public AOC2022Challenge02Service(String inputString) {
+        this.inputString = inputString;
     }
 
     @Override
-    public String solvePartTwo(String input) throws AOCException {
-        String[] matches = input.split("\n");
+    public String solvePartOne() throws AOCException {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         int score = 0;
-        for (String match : matches) {
+        for (String match : inputList) {
+            score += this.duelv1(match.charAt(0), match.charAt(2));
+        }
+        return String.valueOf(score);
+    }
+
+    @Override
+    public String solvePartTwo() throws AOCException {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        int score = 0;
+        for (String match : inputList) {
             score += this.duelv2(match.charAt(0), match.charAt(2));
         }
-        return String.format("Your total score is: %d", score);
+        return String.valueOf(score);
     }
 
     private int duelv1(char player1move, char player2move) throws AOCException {

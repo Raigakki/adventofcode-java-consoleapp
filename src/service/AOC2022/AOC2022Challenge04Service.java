@@ -1,14 +1,23 @@
 package service.AOC2022;
 
 import service.AOCService;
+import utils.StaticUtils;
+
+import java.util.List;
 
 public class AOC2022Challenge04Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2022Challenge04Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
-        String[] sectionsRangesPairs = input.split("\n");
+    public String solvePartOne() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         int numPairTotallyOverlap = 0;
-        for (String sectionsRangesPair : sectionsRangesPairs) { // sectionsRangesPair = 14-98,14-14
+        for (String sectionsRangesPair : inputList) { // sectionsRangesPair = 14-98,14-14
             String[] sectionsRanges = sectionsRangesPair.split(","); // ARRAY WITH 2 POSITION
             String[] sectionStartSectionEndA = sectionsRanges[0].split("-");
             String[] sectionStartSectionEndB = sectionsRanges[1].split("-");
@@ -18,15 +27,14 @@ public class AOC2022Challenge04Service implements AOCService {
             int sectionEndB = Integer.parseInt(sectionStartSectionEndB[1]);
             numPairTotallyOverlap += isTotallyOverlapped(sectionStartA, sectionEndA, sectionStartB, sectionEndB) ? 1 : 0;
             }
-        return String.format("THERE ARE A TOTAL OF %d PAIRS WHICH SECTIONS " +
-                "TOTALLY OVERLAPS WITH EACH OTHER.", numPairTotallyOverlap);
+        return String.valueOf(numPairTotallyOverlap);
     }
 
     @Override
-    public String solvePartTwo(String input) {
-        String[] sectionsRangesPairs = input.split("\n");
+    public String solvePartTwo() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         int numPairTotallyOverlap = 0;
-        for (String sectionsRangesPair : sectionsRangesPairs) { // sectionsRangesPair = 14-98,14-14
+        for (String sectionsRangesPair : inputList) { // sectionsRangesPair = 14-98,14-14
             String[] sectionsRanges = sectionsRangesPair.split(","); // ARRAY WITH 2 POSITION
             String[] sectionStartSectionEndA = sectionsRanges[0].split("-");
             String[] sectionStartSectionEndB = sectionsRanges[1].split("-");
@@ -36,25 +44,20 @@ public class AOC2022Challenge04Service implements AOCService {
             int sectionEndB = Integer.parseInt(sectionStartSectionEndB[1]);
             numPairTotallyOverlap += isOverlapped(sectionStartA, sectionEndA, sectionStartB, sectionEndB) ? 1 : 0;
         }
-        return String.format("THERE ARE A TOTAL OF %d PAIRS THAT OVERLAPS " +
-                "FOR AT LEAST A SECTION WITH EACH OTHER.", numPairTotallyOverlap);
+        return String.valueOf(numPairTotallyOverlap);
 
     }
 
     private boolean isTotallyOverlapped(int startA, int endA, int startB, int endB) {
         if (startA >= startB && endA <= endB)
             return true;
-        if (startB >= startA && endB <= endA)
-            return true;
-        return false;
+        return startB >= startA && endB <= endA;
     }
 
     private boolean isOverlapped(int startA, int endA, int startB, int endB) {
         if (startA >= startB && startA <= endB)
             return true;
-        if (startB >= startA && startB <= endA)
-            return true;
-        return false;
+        return startB >= startA && startB <= endA;
     }
 
 }

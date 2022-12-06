@@ -4,24 +4,30 @@ import service.AOCService;
 
 public class AOC2015Challenge01Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2015Challenge01Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne() {
         int floor = 0;
-        char[] instructionArray = input.toCharArray();
+        char[] instructionArray = inputString.toCharArray();
         for (char character : instructionArray) {
             if (character == '(')
                 floor = floor + 1;
             else if (character == ')')
                 floor = floor - 1;
         }
-        return String.format("THE FLOOR WHERE SANTA HAS TO GO IS FLOOR %d.", floor);
+        return String.valueOf(floor);
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo() {
         int floor = 0;
         int instructionCharacterPosition = 0;
-        char[] instructionArray = input.toCharArray();
+        char[] instructionArray = inputString.toCharArray();
         for (char character : instructionArray) {
             if (character == '(')
                 floor = floor + 1;
@@ -29,11 +35,10 @@ public class AOC2015Challenge01Service implements AOCService {
                 floor = floor - 1;
             instructionCharacterPosition++;
             if (floor < 0) {
-                return String.format(
-                        "THE FIRST CHARACTER POSITION WHEN SANTA GOES BELOW FLOOR ZERO IS %d.\n",
-                        instructionCharacterPosition);
+                return String.valueOf(instructionCharacterPosition);
             }
         }
-        return ("SANTA NEVER GOES BELOW FLOOR ZERO!");
+        return "SANTA NEVER GOES BELOW FLOOR ZERO!";
     }
+
 }

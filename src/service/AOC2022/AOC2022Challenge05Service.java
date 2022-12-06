@@ -8,10 +8,16 @@ import java.util.regex.Pattern;
 
 public class AOC2022Challenge05Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2022Challenge05Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne() {
         Pattern pattern = Pattern.compile("((.*\\R)+.*)\\n\\n((.*\\R)+.*)");
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = pattern.matcher(inputString);
         String crates = "";
         String[] instructionStringArray = new String[]{};
         if (matcher.matches()) {
@@ -57,13 +63,13 @@ public class AOC2022Challenge05Service implements AOCService {
         for (Deque<Character> deque : verticalCratesQueueList) {
             response.append(deque.size() != 0 ? deque.getFirst() : "");
         }
-        return response.toString();
+        return String.valueOf(response);
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo() {
         Pattern pattern = Pattern.compile("((.*\\R)+.*)\\n\\n((.*\\R)+.*)");
-        Matcher matcher = pattern.matcher(input);
+        Matcher matcher = pattern.matcher(inputString);
         String crates = "";
         String[] instructionStringArray = new String[]{};
         if (matcher.matches()) {
@@ -115,7 +121,7 @@ public class AOC2022Challenge05Service implements AOCService {
         for (Deque<Character> deque : verticalCratesQueueList) {
             response.append(deque.size() != 0 ? deque.getFirst() : "");
         }
-        return response.toString();
+        return String.valueOf(response);
     }
 
     private String fixString(String crates, String check, String substitution) {

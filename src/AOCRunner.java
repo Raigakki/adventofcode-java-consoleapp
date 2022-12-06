@@ -4,8 +4,8 @@ import model.AOCChallenge;
 import repository.AOCAvailableChallengeFileRepository;
 import repository.AOCAvailableChallengeRepository;
 import service.AOCService;
+import utils.StaticUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -14,8 +14,6 @@ import java.util.Scanner;
 
 public class AOCRunner implements Runnable {
 
-    private static final String SERVICE_PATH_PATTERN = "service.AOC%s.AOC%sChallenge%sService";
-    private static final String RESOURCES_PATH_PATTERN = "./resources/AOC%s/E%s.txt";
 
     private final Scanner keyboardScanner = new Scanner(System.in);
     private final AOCAvailableChallengeRepository aocAvailableChallengeFileRepository =
@@ -79,26 +77,14 @@ public class AOCRunner implements Runnable {
     }
 
     private void solveInputChallenge() {
-        String responsePartOne;
-        String responsePartTwo;
         try {
-            Class<?> serviceClass = Class.forName(String.format(SERVICE_PATH_PATTERN,
-                    yearInput, yearInput, challengeInput));
-            AOCService aocService = (AOCService) serviceClass.getDeclaredConstructor().newInstance();
-            StringBuilder challengeInstructions = new StringBuilder();
-            File inputFile = new File(String.format(RESOURCES_PATH_PATTERN, yearInput, challengeInput));
-            Scanner fileScanner = new Scanner(inputFile);
-            while (fileScanner.hasNextLine()) {
-                challengeInstructions.append(fileScanner.nextLine());
-                if (fileScanner.hasNextLine())
-                    challengeInstructions.append("\n");
-            }
-            responsePartOne = aocService.solvePartOne(challengeInstructions.toString());
-            responsePartTwo = aocService.solvePartTwo(challengeInstructions.toString());
+            AOCService aocService = StaticUtils.getAOCService(yearInput, challengeInput);
+            String responsePartOne = aocService.solvePartOne();
+            String responsePartTwo = aocService.solvePartTwo();
             ConsoleViewRendering.printResponse(responsePartOne, responsePartTwo);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                  | InvocationTargetException | NoSuchMethodException e) {
-            errMsg = "ERROR IN INSTANTIATING CLASS OF THE SOLUTION. PLEASE CHECK IF THE SERVICE CLASS IS MISSING.";
+            errMsg = "ERROR IN CREATING INSTANCE OF SERVICE CLASS: " + e.getMessage();
             ConsoleViewRendering.printError(errMsg);
         } catch (IOException e) {
             errMsg = "ERROR IN READING INPUT FILE. PLEASE CHECK INPUT FILE @ ./resources/AOCYYYY.txt.";

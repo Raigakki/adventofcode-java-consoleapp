@@ -1,15 +1,23 @@
 package service.AOC2015;
 
 import service.AOCService;
+import utils.StaticUtils;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AOC2015Challenge06Service implements AOCService {
 
+    private final String inputString;
+
+    public AOC2015Challenge06Service(String inputString) {
+        this.inputString = inputString;
+    }
+
     @Override
-    public String solvePartOne(String input) {
-        String[] instructionList = input.split("\n");
+    public String solvePartOne() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
 
         // WE CAN SEE THE GRID OF 1000X1000 LIGHT AS A MATRIX
         // A 1000X1000 MATRIX IS AN ARRAY[1000] OF ARRAY[1000]
@@ -23,7 +31,7 @@ public class AOC2015Challenge06Service implements AOCService {
         Pattern pattern = Pattern.compile("(turn off|turn on|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
 
         try {
-            for (String instruction : instructionList) {
+            for (String instruction : inputList) {
                 Matcher matcher = pattern.matcher(instruction);
                 if (matcher.matches()) {
                     int x = Integer.parseInt(matcher.group(2));
@@ -52,7 +60,7 @@ public class AOC2015Challenge06Service implements AOCService {
                 }
             }
 
-            return String.format("THE TOTAL NUMBER OF LIGHTS TURNED ON IS %d.", lightsOnSum);
+            return String.valueOf(lightsOnSum);
 
         } catch (Exception e) {
             return e.getMessage();
@@ -61,8 +69,8 @@ public class AOC2015Challenge06Service implements AOCService {
     }
 
     @Override
-    public String solvePartTwo(String input) {
-        String[] instructionList = input.split("\n");
+    public String solvePartTwo() {
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
 
         int[][] lightGrid = new int[1000][];
         for (int i = 0; i < 1000; i++) {
@@ -72,7 +80,7 @@ public class AOC2015Challenge06Service implements AOCService {
         Pattern pattern = Pattern.compile("(turn off|turn on|toggle) (\\d+),(\\d+) through (\\d+),(\\d+)");
 
         try {
-            for (String instruction : instructionList) {
+            for (String instruction : inputList) {
                 Matcher matcher = pattern.matcher(instruction);
                 if (matcher.matches()) {
                     int x = Integer.parseInt(matcher.group(2));
@@ -101,7 +109,7 @@ public class AOC2015Challenge06Service implements AOCService {
                 }
             }
 
-            return String.format("THE TOTAL BRIGHTNESS OF THE LIGHTS IS %d.", brightnessSum);
+            return String.valueOf(brightnessSum);
 
         } catch (Exception e) {
             return e.getMessage();

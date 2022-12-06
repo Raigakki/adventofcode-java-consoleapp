@@ -1,19 +1,28 @@
 package service.AOC2022;
 
 import service.AOCService;
+import utils.StaticUtils;
+
+import java.util.List;
 
 public class AOC2022Challenge03Service implements AOCService {
+
+    private final String inputString;
+
+    public AOC2022Challenge03Service(String inputString) {
+        this.inputString = inputString;
+    }
 
     private static final String ITEM_LIST =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     @Override
-    public String solvePartOne(String input) {
+    public String solvePartOne() {
         int sharedItemsPrioritySum = 0;
-        String[] rucksacks = input.split("\n");
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         String compartment1;
         String compartment2;
-        for (String rucksack : rucksacks) {
+        for (String rucksack : inputList) {
             compartment1 = rucksack.substring(0, rucksack.length()/2);
             compartment2 = rucksack.substring(rucksack.length()/2);
             char sharedItem = 0;
@@ -28,20 +37,20 @@ public class AOC2022Challenge03Service implements AOCService {
             }
             sharedItemsPrioritySum += ITEM_LIST.indexOf(sharedItem) + 1;
         }
-        return String.format("THE SUM OF THE PRIORITIES OF SHARED ITEMS IS: %d.", sharedItemsPrioritySum);
+        return String.valueOf(sharedItemsPrioritySum);
     }
 
     @Override
-    public String solvePartTwo(String input) {
+    public String solvePartTwo() {
         int badgesPrioritySum = 0;
-        String[] rucksacks = input.split("\n");
+        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
         String rucksack1;
         String rucksack2;
         String rucksack3;
-        for (int i = 0; i < rucksacks.length - 2; i = i+3) {
-            rucksack1 = rucksacks[i];
-            rucksack2 = rucksacks[i+1];
-            rucksack3 = rucksacks[i+2];
+        for (int i = 0; i < inputList.size() - 2; i = i+3) {
+            rucksack1 = inputList.get(i);
+            rucksack2 = inputList.get(i+1);
+            rucksack3 = inputList.get(i+2);
             char badge = 0;
             outerloop:
             for (int j = 0; j < rucksack1.length(); j++) {
@@ -58,7 +67,7 @@ public class AOC2022Challenge03Service implements AOCService {
             }
             badgesPrioritySum += ITEM_LIST.indexOf(badge) + 1;
         }
-        return String.format("THE SUM OF THE PRIORITIES OF BADGES IS: %d.", badgesPrioritySum);
+        return String.valueOf(badgesPrioritySum);
     }
 
 }

@@ -17,7 +17,7 @@ public class AOC2015Challenge06Service implements AOCService {
 
     @Override
     public String solvePartOne() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
 
         // WE CAN SEE THE GRID OF 1000X1000 LIGHT AS A MATRIX
         // A 1000X1000 MATRIX IS AN ARRAY[1000] OF ARRAY[1000]
@@ -70,7 +70,7 @@ public class AOC2015Challenge06Service implements AOCService {
 
     @Override
     public String solvePartTwo() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
 
         int[][] lightGrid = new int[1000][];
         for (int i = 0; i < 1000; i++) {

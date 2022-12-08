@@ -15,7 +15,7 @@ public class AOC2022Challenge04Service implements AOCService {
 
     @Override
     public String solvePartOne() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         int numPairTotallyOverlap = 0;
         for (String sectionsRangesPair : inputList) { // sectionsRangesPair = 14-98,14-14
             String[] sectionsRanges = sectionsRangesPair.split(","); // ARRAY WITH 2 POSITION
@@ -32,7 +32,7 @@ public class AOC2022Challenge04Service implements AOCService {
 
     @Override
     public String solvePartTwo() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         int numPairTotallyOverlap = 0;
         for (String sectionsRangesPair : inputList) { // sectionsRangesPair = 14-98,14-14
             String[] sectionsRanges = sectionsRangesPair.split(","); // ARRAY WITH 2 POSITION

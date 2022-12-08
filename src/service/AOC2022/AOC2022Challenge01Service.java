@@ -18,7 +18,7 @@ public class AOC2022Challenge01Service implements AOCService {
 
     @Override
     public String solvePartOne() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n\n");
         int maxCalories = Integer.MIN_VALUE;
         int currentIterationCalories = 0;
         for (String totalCalories : inputList) {
@@ -34,7 +34,7 @@ public class AOC2022Challenge01Service implements AOCService {
 
     @Override
     public String solvePartTwo() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n\n");
         int top3ElfCalories = 0;
         List<Integer> totalCaloriesPerElfList = new ArrayList<>();
         int currentIterationCalories = 0;

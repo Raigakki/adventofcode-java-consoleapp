@@ -19,7 +19,7 @@ public class AOC2022Challenge03Service implements AOCService {
     @Override
     public String solvePartOne() {
         int sharedItemsPrioritySum = 0;
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         String compartment1;
         String compartment2;
         for (String rucksack : inputList) {
@@ -43,7 +43,7 @@ public class AOC2022Challenge03Service implements AOCService {
     @Override
     public String solvePartTwo() {
         int badgesPrioritySum = 0;
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         String rucksack1;
         String rucksack2;
         String rucksack3;

@@ -15,7 +15,7 @@ public class StaticUtils {
     private static final String RESOURCES_PATH_PATTERN = "./resources/AOC%s/E%s.txt";
     private static final String SERVICE_PATH_PATTERN = "service.AOC%s.AOC%sChallenge%sService";
 
-    public static List<String> fromInputToStringList(String inputString, String splitter) {
+    public static List<String> fromInputStringToStringList(String inputString, String splitter) {
         return new ArrayList<>(Arrays.asList(inputString.split(splitter)));
     }
 

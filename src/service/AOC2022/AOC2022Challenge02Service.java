@@ -16,7 +16,7 @@ public class AOC2022Challenge02Service implements AOCService {
 
     @Override
     public String solvePartOne() throws AOCException {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         int score = 0;
         for (String match : inputList) {
             score += this.duelv1(match.charAt(0), match.charAt(2));
@@ -26,7 +26,7 @@ public class AOC2022Challenge02Service implements AOCService {
 
     @Override
     public String solvePartTwo() throws AOCException {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         int score = 0;
         for (String match : inputList) {
             score += this.duelv2(match.charAt(0), match.charAt(2));

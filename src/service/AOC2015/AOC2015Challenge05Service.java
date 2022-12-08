@@ -19,7 +19,7 @@ public class AOC2015Challenge05Service implements AOCService {
 
     @Override
     public String solvePartOne() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         long niceStringCount = inputList.stream()
                 .filter(this::vowelsCheck)
                 .filter(this::twiceInARowCheck)
@@ -30,7 +30,7 @@ public class AOC2015Challenge05Service implements AOCService {
 
     @Override
     public String solvePartTwo() {
-        List<String> inputList = StaticUtils.fromInputToStringList(inputString, "\n");
+        List<String> inputList = StaticUtils.fromInputStringToStringList(inputString, "\n");
         long niceStringCount = inputList.stream()
                 .filter(this::doublePairNotOverlappingCheck)
                 .filter(this::letterRepeatsWithCharInBetweenCheck)

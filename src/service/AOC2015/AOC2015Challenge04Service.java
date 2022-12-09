@@ -4,6 +4,7 @@ import service.AOCService;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class AOC2015Challenge04Service implements AOCService {
 
@@ -15,44 +16,43 @@ public class AOC2015Challenge04Service implements AOCService {
 
     @Override
     public String solvePartOne() {
-        int i = 1;
-        String hashText;
+        int secretKeySuffixCounter = 1;
+        String hashString;
         do {
-            String plainText = inputString + i;
-            hashText = this.calculateHash(plainText);
-            i++;
-        } while (!hashText.startsWith("00000"));
-        return String.valueOf(i-1);
+            String secretKey = inputString + secretKeySuffixCounter;
+            BigInteger md5Hash;
+            try {
+                md5Hash = getMD5Hash(secretKey);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            hashString = String.format("%032X", md5Hash);
+            secretKeySuffixCounter++;
+        } while (!hashString.startsWith("00000"));
+        return String.valueOf(secretKeySuffixCounter - 1);
     }
 
     @Override
     public String solvePartTwo() {
-        int i = 1;
-        String hashText;
+        int secretKeySuffixCounter = 1;
+        String hashString;
         do {
-            String plainText = inputString + i;
-            hashText = this.calculateHash(plainText);
-            i++;
-        } while (!hashText.startsWith("000000"));
-        return String.valueOf(i-1);
+            String secretKey = inputString + secretKeySuffixCounter;
+            BigInteger md5Hash;
+            try {
+                md5Hash = getMD5Hash(secretKey);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            hashString = String.format("%032X", md5Hash);
+            secretKeySuffixCounter++;
+        } while (!hashString.startsWith("000000"));
+        return String.valueOf(secretKeySuffixCounter - 1);
     }
 
-    private String calculateHash(String plainText) {
-        StringBuilder hashtext = new StringBuilder();
-        try {
-            MessageDigest m = MessageDigest.getInstance("MD5");
-            m.reset();
-            m.update(plainText.getBytes());
-            byte[] digest = m.digest();
-            BigInteger bigInt = new BigInteger(1, digest);
-            hashtext = new StringBuilder(bigInt.toString(16));
-            // Now we need to zero pad it if you actually want the full 32 chars.
-            while (hashtext.length() < 32) {
-                hashtext.insert(0, "0");
-            }
-        } catch (Exception e) {
-            return "ERROR IN CALCULATING HASH.";
-        }
-        return hashtext.toString();
+    public static BigInteger getMD5Hash(String string) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        return new BigInteger(1, md.digest(string.getBytes()));
     }
+
 }

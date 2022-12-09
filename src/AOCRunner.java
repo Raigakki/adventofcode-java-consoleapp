@@ -9,6 +9,7 @@ import utils.StaticUtils;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,6 +42,8 @@ public class AOCRunner implements Runnable {
             // SELECT YEAR
             List<String> availableYearsList = new ArrayList<>();
             aocChallengeList
+                    .stream()
+                    .sorted(Comparator.comparing(AOCChallenge::year)).toList()
                     .forEach(aocChallenge -> {
                         if (!availableYearsList.contains(aocChallenge.year()))
                             availableYearsList.add(aocChallenge.year());
@@ -56,6 +59,7 @@ public class AOCRunner implements Runnable {
             List<String> availableSelectedYearChallengeList = new ArrayList<>();
             aocChallengeList
                     .stream()
+                    .sorted(Comparator.comparing(AOCChallenge::challengeNumber))
                     .filter(aocChallenge -> aocChallenge.year().equals(yearInput))
                     .forEach(aocChallenge -> {
                         if (!availableSelectedYearChallengeList.contains(aocChallenge.challengeNumber()))
